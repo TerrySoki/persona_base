@@ -1,0 +1,518 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>persona_base</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  </head>
+  <body>
+  <div class="container border border-primary">
+      {#first row#}
+      <div class="row">
+          <div class="col-2 mt-5"></div>
+          {#music and mtv#}
+          <div class="col-3 mt-5">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#music">music</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#mtv">mtv</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane container active" id="music">
+                <ul class="list-group">
+                {% for m in music %}
+                    <li class="">
+                    <div class="container mt-3">
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#{{ m.title }}">
+                              {{ m.title }} <span class="badge bg-warning">New</span>
+                          </button>
+                    </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="{{ m.title }}">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                <h4 class="modal-title">{{ m.title }}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+
+                              <!-- Modal body -->
+                              <div class="modal-body">
+                                  <ul class="list-group list-group-horizontal">
+                                     <li class="list-group-item">{{ m.finished_date_time}}</li>
+                                  </ul>
+                                <img src="{{ m.cover_file.url }}" class="img-thumbnail" alt="..." style="width: 14rem; height: auto">
+                                <audio controls id="player" class="mt-3">
+                                    <source src="{{ m.audio_file.url }}" type="audio/mp3">
+                                </audio>
+                                <ul class="list-group list-group-flush">
+                                  <li class="list-group-item">composer: {{ m.composer}}</li>
+                                  <li class="list-group-item">bass_player: {{ m.bass_player}}</li>
+                                  <li class="list-group-item">guitar_player: {{ m.guitar_player}}</li>
+                                  <li class="list-group-item">keyboarder: {{ m.keyboarder}} </li>
+                                  <li class="list-group-item">recorder: {{ m.recorder}}</li>
+                                  <li class="list-group-item">mixer: {{ m.mixer}}</li>
+                                  <li class="list-group-item">producer: {{ m.producer}}</li>
+                                </ul>
+                              </div>
+
+                              <!-- Modal footer -->
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+              </div>
+              <div class="tab-pane container fade" id="mtv">
+                  <ul class="list-group">
+                    {% for mt in mtv %}
+                        <li class="">
+                        <div class="container mt-3">
+                              <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#{{ mt.title }}">
+                                  {{ mt.title }} <span class="badge bg-warning">New</span>
+                              </button>
+                        </div>
+
+                            <!-- The Modal -->
+                            <div class="modal" id="{{ mt.title }}">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                  <!-- Modal Header -->
+                                  <div class="modal-header">
+                                    <h4 class="modal-title">{{ mt.title }}</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                  </div>
+
+                                  <!-- Modal body -->
+                                  <div class="modal-body">
+                                    <ul class="list-group list-group-horizontal">
+                                      <li class="list-group-item">{{ mt.finished_date_time}}</li>
+                                    </ul>
+                                    <img src="{{ mt.cover_file.url }}" class="img-thumbnail" alt="..." style="width: 14rem; height: auto">
+                                    <video controls style="width: 17rem; height: auto">
+                                      <source src="{{ mt.video_file.url }}" type="video/mp4">
+                                    </video>
+                                    <ul class="list-group list-group-flush">
+                                      <li class="list-group-item">camera_oprator: {{ mt.camera_oprator}}</li>
+                                      <li class="list-group-item">editor: {{ mt.editor}}</li>
+                                      <li class="list-group-item">director: {{ mt.director}}</li>
+                                      <li class="list-group-item">lighting_operator: {{ mt.lighting_operator}} </li>
+                                    </ul>
+                                  </div>
+
+                                  <!-- Modal footer -->
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                  </div>
+
+                                </div>
+                              </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          {#basic_info#}
+          <div class="col-2 d-flex" align="center">
+              <ul class="list-group">
+                  <li class="list-group-item"><img src="{% static 'oneview_page/profile.png' %}" class="card-img-top img-responsive" alt="..." style="width: 8rem;"></li>
+                  <li class="list-group-item"><h5 class="card-title">Zhixun Teng</h5></li>
+                  <li class="list-group-item">
+
+{#                      <ul class="list-group list-group-horizontal">#}
+{#                          <li class="list-group-item">Youtube</li>#}
+{#                          <li class="list-group-item">Ins</li>#}
+{#                          <li class="list-group-item">Twitter</li>#}
+{#                          <li class="list-group-item">Tiktok</li>#}
+{#                      </ul>#}
+                      <a href="#" class="btn btn-primary btn-sm mt-1 rounded" style="font-size: 0.5rem;">
+                      Youtube</a>
+                      <a href="#" class="btn btn-primary btn-sm mt-1 rounded" style="font-size: 0.5rem;">
+                      IG</a>
+                      <a href="#" class="btn btn-primary btn-sm mt-1 rounded" style="font-size: 0.5rem;">
+                      Tiktok</a>
+                  </li>
+              </ul>
+          </div>
+          {#photo#}
+          <div class="col-3 mt-5">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" data-bs-toggle="tab" href="#image_me">image_me</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab" href="#shooting">shooting</a>
+              </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content">
+              <div class="tab-pane container active" id="image_me">
+                  <ul class="list-group">
+                     {% for im_m in image_me %}
+                    <li class="">
+                    <div class="container mt-3">
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#{{ im_m.title }}">
+                              {{ im_m.title }} <span class="badge bg-warning">New</span>
+                          </button>
+                    </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="{{ im_m.title }}">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                <h4 class="modal-title">{{ im_m.title }}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+
+                              <!-- Modal body -->
+                              <div class="modal-body">
+                                  <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">location: {{ im_m.place}}</li>
+                                    <li class="list-group-item">age: <span class="badge bg-success">{{ im_m.age }}</span></li>
+                                    <li class="list-group-item">{{ im_m.created_date_time}}</li>
+                                 </ul>
+                                <img src="{{ im_m.image_file.url }}" class="img-thumbnail" alt="..." style="width: 18rem; height: auto">
+                                <p>{{ im_m.what_I_am_thinking }}</p>
+                              </div>
+
+                              <!-- Modal footer -->
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+              </div>
+              <div class="tab-pane container fade" id="shooting">
+                   <ul class="list-group">
+                     {% for im_sho in image_shooting %}
+                    <li class="">
+                    <div class="container mt-3">
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#{{ im_sho.title }}">
+                              {{ im_sho.title }} <span class="badge bg-warning">New</span>
+                          </button>
+                    </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="{{ im_sho.title }}">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                <h4 class="modal-title">{{ im_sho.title }}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+
+                              <!-- Modal body -->
+                              <div class="modal-body">
+                                  <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">location: {{ im_sho.place}}</li>
+                                    <li class="list-group-item">age: <span class="badge bg-success">{{ im_sho.age }}</span></li>
+                                    <li class="list-group-item">{{ im_sho.created_date_time}}</li>
+                                 </ul>
+                                <img src="{{ im_sho.image_file.url }}" class="img-thumbnail" alt="..." style="width: 18rem; height: auto">
+                                <p>{{ im_sho.mindflow }}</p>
+                              </div>
+
+                              <!-- Modal footer -->
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-2 mt-5"></div>
+      </div>
+      {#the second row#}
+      <div class="row d-flex justify-content-center">
+          {#pages#}
+           <div class="col-7 mt-5 justify-content-center">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#now">now</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#memoery">memoery</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#career">career</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#skills">skills</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#education">education</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#emploement">emploement</a>
+                  </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                  <div class="tab-pane container active" id="now">
+                     <ul class="list-group">
+                     {% for n in now %}
+                    <li class="">
+                    <div class="container mt-3">
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#{{ n.title }}">
+                              {{ n.title }} <span class="badge bg-warning">New</span>
+                          </button>
+                    </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="{{ n.title }}">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                <h4 class="modal-title">{{ n.title }}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+
+                              <!-- Modal body -->
+                              <div class="modal-body">
+                                  <ul class="list-group list-group-horizontal">
+                                      <li class="list-group-item">aim: {{ n.aim}}</li>
+                                      <li class="list-group-item">reason: {{ n.reason}}</li>
+                                      <li class="list-group-item">start date: {{ n.start_date}}</li>
+                                  </ul>
+                              </div>
+
+                              <!-- Modal footer -->
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                  </div>
+                  <div class="tab-pane container fade" id="memoery">
+                      <ul class="list-group">
+                     {% for memo in memory %}
+                    <li class="">
+                    <div class="container mt-3">
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#{{ memo.title }}">
+                              {{ memo.title }} <span class="badge bg-warning">New</span>
+                          </button>
+                    </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="{{ memo.title }}">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                <h4 class="modal-title">{{ memo.title }}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+
+                              <!-- Modal body -->
+                              <div class="modal-body">
+                                  <ul class="list-group list-group-flush">
+                                      <li class="list-group-item">event: {{ memo.event}}</li>
+                                      <li class="list-group-item">date: {{ memo.date_and_year}}</li>
+                                      <li class="list-group-item">age: {{ memo.age}}</li>
+                                      <li class="list-group-item">mindflow: {{ memo.mindflow}}</li>
+                                      <li class="list-group-item">participants: {{ memo.people}}</li>
+                                  </ul>
+                              </div>
+
+                              <!-- Modal footer -->
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                  </div>
+                  <div class="tab-pane container fade" id="career">
+                      <ul class="list-group">
+                     {% for cre in career %}
+                    <li class="">
+                    <div class="container mt-3">
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#{{ cre.title }}">
+                              {{ cre.title }} <span class="badge bg-warning">New</span>
+                          </button>
+                    </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="{{ cre.title }}">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                <h4 class="modal-title">{{ cre.title }}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+
+                              <!-- Modal body -->
+                              <div class="modal-body">
+                                  <ul class="list-group list-group-flush">
+                                      <li class="list-group-item">value: {{ cre.value}}</li>
+                                      <li class="list-group-item">aim of earning: {{ cre.aim_of_earning}}</li>
+                                      <li class="list-group-item">role_of_participants: {{ cre.role_of_participants}}</li>
+                                      <li class="list-group-item">industrial: {{ cre.industrial}}</li>
+                                      <li class="list-group-item">start date: {{ cre.start_date}}</li>
+                                  </ul>
+                              </div>
+
+                              <!-- Modal footer -->
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                  </div>
+                  <div class="tab-pane container fade" id="skills">
+                    {% include "oneview_page/skills.html" %}
+                  </div>
+                  <div class="tab-pane container fade" id="education">
+                       <ul class="list-group">
+                     {% for edu in education %}
+                    <li class="">
+                    <div class="container mt-3">
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#{{ edu.title }}">
+                              {{ edu.title }} <span class="badge bg-warning">New</span>
+                          </button>
+                    </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="{{ edu.title }}">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                <h4 class="modal-title">{{ edu.title }}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+
+                              <!-- Modal body -->
+                              <div class="modal-body">
+                                  <ul class="list-group list-group-horizontal">
+                                      <li class="list-group-item">acquirement: {{ edu.acquirement }}</li>
+                                      <li class="list-group-item">event: {{ edu.event }}</li>
+                                      <li class="list-group-item">date of time: {{ edu.date_and_year }}</li>
+                                  </ul>
+                              </div>
+
+                              <!-- Modal footer -->
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                  </div>
+                  <div class="tab-pane container fade" id="emploement">
+                    <ul class="list-group">
+                     {% for wr in work %}
+                    <li class="">
+                    <div class="container mt-3">
+                          <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#{{ wr.company }}">
+                              {{ wr.company }} <span class="badge bg-warning">New</span>
+                          </button>
+                    </div>
+
+                        <!-- The Modal -->
+                        <div class="modal" id="{{ wr.company }}">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+
+                              <!-- Modal Header -->
+                              <div class="modal-header">
+                                <h4 class="modal-title">{{ wr.company }}</h4>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                              </div>
+
+                              <!-- Modal body -->
+                              <div class="modal-body">
+                                  <ul class="list-group list-group-flush">
+                                      <li class="list-group-item">company/institute: {{ wr.company }}</li>
+                                      <li class="list-group-item">duty: {{ wr.duty }}</li>
+                                      <li class="list-group-item">location: {{ wr.location }}</li>
+                                      <li class="list-group-item">job_title: {{ wr.job_title }}</li>
+                                      <li class="list-group-item">start date: {{ wr.start_date }}</li>
+                                      <li class="list-group-item">end date: {{ wr.end_date }}</li>
+                                  </ul>
+                              </div>
+
+                              <!-- Modal footer -->
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                              </div>
+
+                            </div>
+                          </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                </ul>
+                  </div>
+
+                </div>
+            </div>
+      </div>
+  </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+  </body>
+</html>
